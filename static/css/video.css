@@ -1,0 +1,29 @@
+.content {
+    padding-top: 130px;
+}
+
+.right-and-order {
+    background-color: #fff;
+}
+
+.aside {
+    overflow-y: auto;
+    width: 100%;
+    height: 650px;
+}
+
+.info {
+    color: #5e5e5e;
+    width: 90%;
+    bottom: 0;
+    height: 20px;
+
+}
+
+.comment-btn {
+    height: 5.2em;
+    width: 5.2em;
+}
+.down {
+    margin-bottom: 10%;
+}

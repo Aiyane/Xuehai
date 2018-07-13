@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}学海网-机构{% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/list.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb right-and-order">
+            <li><a href="{% url 'index' %}?app={{ app }}">主页</a></li>
+            <li><a href="{% url 'orgs:org_list' %}?app={{ app }}">机构</a></li>
+            <ol class="fr list-inline">
+                <li>分类：</li>
+                <li><a href="?ct=&app={{ app }}" class="btn btn-primary{% if ct == '' %}active disabled{% endif %}">全部机构</a></li>
+                <li><a href="?ct=gr&app={{ app }}" class="btn btn-primary{% if ct == 'gr' %}active disabled{% endif %}">国内高校</a></li>
+                <li><a href="?ct=gx&app={{ app }}" class="btn btn-primary{% if ct == 'gx' %}active disabled{% endif %}">国外高校</a></li>
+                <li><a href="?ct=pxjg&app={{ app }}" class="btn btn-primary{% if ct == 'pxjg' %}active disabled{% endif %}">培训机构</a>
+                </li>
+            </ol>
+        </ol>
+        <div class="row">
+
+            <div class="col-md-8">
+
+                {% for org in orgs.object_list %}
+
+                    <div class="figure panel panel-primary row">
+                        <div class="col-md-4 panel-body">
+                            <a href="{% url 'orgs:org_detail' org.id %}"><img class="" src="{{ MEDIA_URL }}{{ org.image }}" width="200px"
+                                             height="214px" alt="Card image cap"></a>
+                        </div>
+                        <div class="col-md-8 panel-body">
+                            <div class="card-block pull-right">
+                                <div class="">
+                                    <p class="card-title">{{ org.name }}</p>
+                                    <p class="card-text">{{ org.desc }}</p>
+                                </div>
+                                <a href="{% url 'orgs:org_detail' org.id %}" class="btn btn-primary">了解详情 &rarr;</a>
+                            </div>
+                        </div>
+                        <div class="panel-footer text-muted">
+                            机构类别：{{ org.tag }} 课程数：<a href="#">{{ org.course_nums }}</a>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="panel-body panel-info">
+                    <h3 class="card-header panel-heading">推荐课程</h3>
+                    <div class="recommend-side">
+                        <div class="row">
+                            <div class="col-md-6 panel-body">
+                                <ul class="side-text text-center">
+                                    <li><a href="{% url 'courses:courses_list' %}?tag=Web+设计&order={{ order }}&app={{ app }}" {% if tag == 'Web 设计' %}class="btn btn-lg active disabled"{% endif %}>Web 设计</a></li>
+                                    <li><a href="{% url 'courses:courses_list' %}?tag=HTML&order={{ order }}&app={{ app }}" {% if tag == 'HTML' %}class="btn btn-lg active disabled"{% endif %}>HTML</a></li>
+                                    <li><a href="{% url 'courses:courses_list' %}?tag=C语言&order={{ order }}&app={{ app }}" {% if tag == 'C语言' %}class="btn btn-lg active disabled"{% endif %}>C语言</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 panel-body">
+                                <ul class="side-text text-center">
+                                    <li><a href="{% url 'courses:courses_list' %}?tag=JavaScript&order={{ order }}&app={{ app }}" {% if tag == 'JavaScript' %}class="btn btn-lg active disabled" {% endif %}>JavaScript</a></li>
+                                    <li><a href="{% url 'courses:courses_list' %}?tag=CSS&order={{ order }}&app={{ app }}" {% if tag == 'CSS' %}class="btn btn-lg active disabled" {% endif %}>CSS</a></li>
+                                    <li><a href="{% url 'courses:courses_list' %}?tag=Python&order={{ order }}&app={{ app }}" {% if tag == 'Python' %}class="btn btn-lg active disabled"{% endif %}>Python</a></li>
+                                    <a class="btn" href="{% url 'courses:courses_list' %}?order={{ order }}&app={{ app }}" role="button">全部课程 &raquo;</a>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side Widget -->
+                <div class="panel-body panel-success">
+                    <h3 class="card-header panel-heading">通知</h3>
+                    <div class="message">
+                        张老师的新课上线了，本站举办x x x 活动，xxx圆满结束，祝贺x x x 同学获得奖励， 哈哈哈哈!
+                    </div>
+                </div>
+
+                <div class="panel-body panel-default">
+                    <h4 class="card-header panel-heading">友情链接</h4>
+                    <div class="urls text-center panel-footer">
+                        <li><a href="http://www.baidu.com">百度</a></li>
+                        <li><a href="http://qq.com">腾讯</a></li>
+                        <li><a href="http://www.baidu.com">武理</a></li>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="pageturn"><!--分页-->
+            <ul class="pagelist list-inline text-center panel">
+                {% if orgs.has_previous %}<!--如果有前一页-->
+                    <li><a href="?{{ orgs.previous_page_number.querystring }}" class="btn btn-default">上一页</a></li>
+                {% endif %}
+
+                {% for page in orgs.pages %}<!--遍历所有页-->
+                    {% if page %}<!--其中任意一页-->
+                        {% ifequal page orgs.number %}<!--这一页与显示页相等-->
+                            <li><a href="?{{ page.querystring }}" class="active btn btn-default disabled">{{ page }}</a>
+                            </li><!--置为选中-->
+                        {% else %}
+                            <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li><!--置为不选中-->
+                        {% endifequal %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if orgs.has_next %}<!--如果有后一页-->
+                    <li class="long"><a href="?{{ orgs.next_page_number.querystring }}" class="btn btn-default">下一页</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block custom_js %}
+
+{% endblock %}

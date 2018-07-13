@@ -1,0 +1,17 @@
+.login-wrap {
+  margin: 50% auto;
+  background: #fff;  
+}
+.panel-heading {
+  height: 80px;
+}
+.panel-title {
+  padding-top: 6%;
+  font-size: 2em;
+}
+.index-right {
+  float: right;
+}
+.error {
+  color: red;
+}

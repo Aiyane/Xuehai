@@ -1,0 +1,78 @@
+{% extends 'detail_base.html' %}
+{% load staticfiles %}
+{% block title %}学海网-课程详情{% endblock %}
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/course_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+    <header class="header-img" style="background-image: url('{{ MEDIA_URL }}{{ course.image }}');">
+        <div class="container">
+            <div class="row">
+                <div class="site-heading text-center">
+                    <h1>{{ course.category }} - {{ course.name }}</h1>
+                    <span class="subheading">{{ org.name }} -- {{ teacher.name }}</span><br><br><br>
+                    <a href="{% url 'courses:course_video' course.get_first_video_id %}" class="btn btn-success"><h2>开始学习</h2></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <ol class="breadcrumb right-and-order">
+            <li><a href="{% url 'index' %}?app={{ app }}">主页</a></li>
+            <li><a href="{% url 'courses:courses_list' %}?app={{ app }}">课程</a></li>
+            <li><a href="{% url 'courses:course_detail' course.id %}">{{ course.name }}</a></li>
+        </ol>
+        <div class="row">
+            <div class="col-lg-7">
+                {% for lesson in course.get_course_lesson %}
+                    <div class="post-preview">
+                        <h2 class="post-title">
+                            {{ lesson.name }}
+                        </h2>
+                        {% for video in lesson.get_lesson_video %}
+                            <a href="{% url 'courses:course_video' video.id %}">
+                                <h3 class="post-subtitle">
+                                    {{ video.name }}
+                                </h3>
+                            </a>
+                        {% endfor %}
+                        <p class="post-meta">添加时间：{{ lesson.add_time }}</p>
+                    </div>
+                    <hr>
+                {% endfor %}
+            </div>
+            <div class="col-lg-5">
+                <div class="panel panel-default">
+                    <div class="panel-body text-center">
+                        <div class="panel-title">
+                            {{ course.you_get }}
+                        </div><br>
+                        <hr>
+                        <h3>课程机构</h3><span class="label label-primary"><a href="{% url 'orgs:org_detail' org.id %}">{{ course.course_org.name }}</a></span><br>
+                        <hr>
+                        <h3>课程讲师</h3><span class="label label-primary"> <a href="{% url 'orgs:teacher_detail' teacher.id %}">{{ teacher.name }}</a></span><br>
+                        <hr>
+                        <h3>难度</h3> {{ course.get_degree_display }}<br>
+                        <hr>
+                        <h3>学习人数</h3> {{ course.students }}<br>
+                        <hr>
+                        <h3>标签</h3><span class="label label-primary"> <a href="{% url 'courses:courses_list' %}?tag={{ course.tag }}">{{ course.tag }}</a></span><br>
+                        <hr>
+                        <h3>课程须知</h3> {{ course.you_need_know }}<br>
+                        <hr>
+                        <h3>开课时间</h3> {{ course.add_time }}<br>
+                        <hr>
+                        <h3>课程资源</h3>{% for course_resource in course_resources %}<a href="{{ MEDIA_URL }}{{ course_resource.download }}" target="_blank"> {{ course_resource.name }}</a><br>{% endfor %}
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

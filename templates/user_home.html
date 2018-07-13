@@ -1,0 +1,65 @@
+{% extends 'user_base.html' %}
+{% load staticfiles %}
+{% block title %}学海网 -- 用户课程{% endblock %}
+{% block content %}
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="{% url 'users:user_home' %}">课程</a></li>
+        <li role="presentation"><a href="{% url 'users:user_list' %}">个人信息</a></li>
+        <li role="presentation"><a href="{% url 'users:user_message' %}">消息</a></li>
+    </ul>
+    <div class="row">
+        <div class="col-md-3 recommend">
+            <h3 class="page-header">&nbsp;&nbsp;我们向你推荐 <span class="label label-danger">Hot</span></h3>
+            {% for not_see_course in courses %}
+                <div class="col-md-12">
+                    <div class="bgrid folio-item">
+                        <div class="item-wrap">
+                            <a href="{% url 'courses:course_detail' not_see_course.id %}" class="org-slick">
+                                <img src="{{ MEDIA_URL }}{{ not_see_course.image }}" width="100%" height="162px"
+                                     alt="{{ not_see_course.name }}">
+                                <div class="portfolio-item-meta">
+                                    <h5>{{ not_see_course.course_org }}</h5>
+                                    <p>{{ not_see_course.name }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="alert alert-warning" role="alert">
+                        该课程由<a href="{% url 'orgs:org_detail' not_see_course.course_org.id %}"
+                               class="alert-link">{{ not_see_course.course_org.name }}</a>提供
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <h2 class="page-header">&nbsp;&nbsp;你学习过的课程 <span class="label label-default">New</span></h2>
+                {% for seen_course in seen_courses %}
+                    <div class="col-md-4">
+                        <div class="bgrid folio-item">
+                            <div class="item-wrap">
+                                <a href="{% url 'courses:course_detail' seen_course.course.id %}" class="org-slick">
+                                    <img src="{{ MEDIA_URL }}{{ seen_course.course.image }}" width="100%" height="162px"
+                                         alt="{{ seen_course.course.name }}">
+                                    <div class="portfolio-item-meta">
+                                        <h5>{{ seen_course.course.course_org }}</h5>
+                                        <p>{{ seen_course.course.name }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="alert alert-warning" role="alert">
+                            <span>学习时间： {{ seen_course.course.add_time }}</span>
+                            <br>该课程由<a href="{% url 'orgs:org_detail' seen_course.course.course_org.id %}"
+                                       class="alert-link">{{ seen_course.course.course_org.name }}</a>提供
+                        </div>
+                    </div>
+                {% endfor %}
+                {% if more == 0 and seen_courses|length == 9 %}<a href="?more=1"><p class="text-right more">查看更多 &raquo;</p></a>{% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

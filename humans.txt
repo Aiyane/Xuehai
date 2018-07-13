@@ -1,0 +1,24 @@
+在此向武汉理工大学升升公寓I栋321寝室四位单身狗征召女朋友
+有意者请速向我联系
+要求:女.
+
+/* TEAM */
+	
+	Developer: ZhangZhiqiang.
+	Nick_name: Aiyane.
+	Site: 2310091880qq@gmail.com, 18990185821.
+	Github: qq2310091880.
+	QQ: 2310091880.
+	Location: Wuhan Hubei, China.
+
+/* THANKS */
+
+	陈晨、梅锦、朱洵: 感谢室友没有放弃对我的治疗 ==!.
+
+/* SITE */
+	
+	Last updata: 2017/4/17.
+	Standards: HTML5, CSS3, Python2.7.
+	Language: 中文, English.
+	Components: jQuery, Bootstrap.
+	IDE: Sublime Text 3, Pycharm.

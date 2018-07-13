@@ -1,0 +1,86 @@
+.header-img {
+    padding-top: 80px;
+}
+
+.header-img > div > a {
+    margin-top: 80px;
+}
+
+.org-image {
+    margin-right: 30px;
+}
+
+.section-inner {
+    background: #fff;
+    padding: 30px 60px 60px 60px;
+}
+
+.item {
+    padding: 10px;
+}
+.footer-teacher {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: #778492;
+    line-height: 1.1;
+}
+
+body {
+    font-family: 'Lato', arial, sans-serif;
+    color: #434343;
+    background: #DAE3E7;
+}
+.right-and-order {
+    background-color: #DAE3E7;
+}
+/*课程图*/
+.folio-item .portfolio-item-meta {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 30%;
+    left: -100px;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    zoom: 0.8;
+    transition: all 0.5s ease-in-out;
+}
+
+.folio-item .portfolio-item-meta p {
+    color: #87e9ff;
+    font-size: 2em;
+}
+
+.folio-item .portfolio-item-meta h5 {
+    font-size: 1.3em;
+}
+
+/* on hover */
+
+.folio-item:hover .portfolio-item-meta {
+    opacity: 1;
+    zoom: 1;
+}
+
+.folio-item:hover .portfolio-item-meta {
+    left: 0;
+}
+
+.folio-item:hover .item-wrap img {
+    transform: scale(1.1);
+    opacity: 0.5;
+}
+.org-slick:hover, .org-slick:active {
+    color: #a3e7cf;
+}

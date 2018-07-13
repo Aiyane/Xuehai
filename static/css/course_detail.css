@@ -1,0 +1,31 @@
+.header-img {
+    height: 500px;
+    padding-top: 100px;
+    background-size: cover;
+}
+.site-heading > h1 {
+    color: #e0e0e0;
+    font-size: 5em;
+}
+.subheading {
+    color: #d3d3d3;
+    font-size: 3em;
+}
+.panel {
+    margin-top: 5%;
+}
+.label {
+    font-size: 1.5em;
+}
+.label > a {
+    color: #fefefe;
+    text-decoration: none;
+    -webkit-transition: all 0.4s ease-in-out;
+}
+.label > a:hover, a:active {
+    color: #0ae;
+}
+.right-and-order {
+    background-color: #fff;
+    margin-top: 3%;
+}

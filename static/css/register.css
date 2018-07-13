@@ -1,0 +1,23 @@
+.jumbotron {
+    margin-top: 3%;
+}
+.social{
+    font-size: 1.5em;
+}
+.hr-head {
+    width: 80%;
+}
+
+footer {
+  padding: 40px 0;
+  color: #000000;
+  text-align: center;
+  background-color: #d2d2d2;
+  /*border-top: 1px solid #e5e5e5;*/
+}
+footer p:last-child {
+  margin-bottom: 0;
+}
+.error {
+    color: red;
+}

@@ -1,0 +1,99 @@
+{% extends 'detail_base.html' %}
+{% load staticfiles %}
+{% block title %}学海网-机构详情{% endblock %}
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/org_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+    <header class="jumbotron header-img">
+        <div class="container">
+            <img class="org-image pull-left" src="{{ MEDIA_URL }}{{ org.image }}" width="180px" alt="{{ org.name }}">
+            <div class="pull-left">
+                <h1 class="name">{{ org.name }}</h1>
+                <h2 class="desc h2">{{ org.get_category_display }}</h2>
+            </div>
+            <a class="btn btn-success btn-lg pull-right" href="http://baike.baidu.com/item/{{ org.name }}"
+               target="_blank">了解更多</a>
+        </div><!--//container-->
+    </header>
+    <div class="container">
+        <ol class="breadcrumb right-and-order">
+            <li><a href="{% url 'index' %}?app={{ app }}">主页</a></li>
+            <li><a href="{% url 'orgs:org_list' %}?app={{ app }}">机构</a></li>
+            <li><a href="{% url 'orgs:org_detail' org.id %}">{{ org.name }}</a></li>
+        </ol>
+        <div class="section-inner">
+            <div class="text-center">
+                <h3 class="title h3"><a
+                        href="http://baike.baidu.com/item/{{ org.name }}"
+                        target="_blank">{{ org.name }}</a></h3>
+                <p class="summary">加入时间： {{ org.add_time }}</p>
+                <h3 class="text-left h3">机构描述</h3>
+                <div class="text-left">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ org.desc }}</p>
+
+                    <h3>机构标签</h3>
+                    <span class="label label-primary">{{ org.tag }}</span>
+
+                </div>
+                <a class="text-right"
+                   href="{% url 'orgs:org_list' %}"
+                ><p>返回机构列表 &raquo;</p></a>
+            </div>
+            <hr>
+
+            {% for course in all_courses %}
+                <div class="item row">
+
+                    <div class="col-md-4 bgrid folio-item">
+                        <div class="item-wrap">
+                            <a href="{% url 'courses:course_detail' course.id %}" class="org-slick" target="_blank">
+                                <img src="{{ MEDIA_URL }}{{ course.image }}" width="100%" alt="Underwater">
+                                <div class="portfolio-item-meta">
+                                    <h5>{{ course.course_org }}</h5>
+                                    <p>{{ course.name }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <h3 class="title h3"><a
+                                href="{% url 'courses:course_detail' course.id %}"
+                                target="_blank">{{ org.name }} - {{ course.name }}</a></h3>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ course.desc }}</p>
+                        <p><a href="{% url 'courses:course_detail' course.id %}" target="_blank"> 查看详情 &rarr;</a></p>
+                    </div>
+                </div><!--//item-->
+            {% endfor %}
+            <hr>
+            <p class="text-right"><a href="{% url 'orgs:org_list' %}">查看全部课程 &raquo;</a></p>
+        </div>
+        <section>
+            <div class="section-inner footer-teacher">
+                <h2 class="heading h2">机构教师</h2>
+                {% for teacher in all_teachers %}
+                    <div class="row">
+                        <div class="col-md-2" style="margin-top: 4%;">
+                            <a href="{% url 'orgs:teacher_detail' teacher.id %}">
+                                <img src="{{ MEDIA_URL }}{{ teacher.image }}" width="100%" alt="{{ teacher.name }}"/>
+                            </a>
+                        </div>
+                        <div class="col-md-10">
+                            <h3 class="title h3"><a href="{% url 'orgs:teacher_detail' teacher.id %}">{{ org.name }}
+                                -- {{ teacher.name }}</a></h3>
+                            <p class="summary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ teacher.points }}</p>
+                            <p><a href="{% url 'orgs:teacher_detail' teacher.id %}" target="_blank"> 查看详情 &rarr;</a></p>
+                        </div>
+                    </div>
+
+                {% endfor %}
+                <hr>
+                <p class="text-right"><a href="{% url 'orgs:teacher_list' %}">查看全部教师 &raquo;</a></p>
+            </div>
+        </section>
+    </div><!--container-->
+
+{% endblock %}

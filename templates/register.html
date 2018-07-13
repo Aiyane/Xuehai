@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh">
+{% load staticfiles %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>学海网--注册</title>
+
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'js/vendor/holder.min.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+
+    <!--[if lte IE8]>
+<p class="browserupgrade">您的浏览器版本太老了，请到<a href="http://browsehapper.com/">这里</a>更新，以获取最佳的体验</p>
+<![endif]-->
+</head>
+
+<body>
+
+<!-- **********************************************************************************************************************************************************
+  MAIN CONTENT
+  *********************************************************************************************************************************************************** -->
+<header class="header">
+    <div class="container">
+        <div class="jumbotron row">
+            <div class="col-md-3">
+                <img class="profile-image" src="{% static 'img/profile.png' %}" alt="James Lee"/>
+            </div>
+            <div class="col-md-9 pull-right">
+                <h1 class="title">学海网</h1>
+                <h2 class="desc">学海网，简称“学海”，Xuehai，是一个致力于学生发展的在线教育平台。</h2>
+                <ul class="social list-inline">
+                    <li><a href="#"><i class="glyphicon glyphicon-envelope"></i></a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-phone-alt"></i></a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="hr-head">
+
+        <!--//container-->
+
+</header>
+
+<div id="login-page">
+    <div class="container">
+
+
+        <div class="col-md-8 col-md-offset-2">
+            <div class="login-wrap panel panel-info">
+                <div class="panel-heading text-center">
+                    <h1 class="panel-title">学海网账户注册</h1>
+                </div>
+                <div class="panel-body">
+                    <form class="form-login" action="{% url 'operation:register' %}" method="POST" autocomplete="on"
+                          id="register_form"  enctype="multipart/form-data">
+                        <div class="form-group">
+                            <p>
+                            <label for="Input_nickname">用户名</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="2到10个字符"
+                                   autocomplete="on" required="required">
+                            </p>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="gender1">性别</label>
+                            <br>
+
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="gender1" value="option1"> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="gender2" value="option2"> 女
+                            </label>
+
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <p>
+                            <label for="birth">生日</label>
+                            <input type="date" class="form-control" id="birth" name="birth" placeholder="生日">
+                            </p>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <p>
+                            <label for="tel">电话号码</label>
+                            <input type="tel" class="form-control" id="tel" name="tel" placeholder="电话号码" required="required">
+                            </p>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <p>
+                            <label for="email">邮箱地址</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="邮箱" required="required">
+                            </p>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <p>
+                            <label for="password">密码</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="输入5到16个字符" required="required">
+                            </p>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <p>
+                            <label for="up_password">确认密码</label>
+                            <input type="password" class="form-control" id="up_password" name="up_password"
+                                   placeholder="确认密码" required="required">
+                            </p>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <p>
+                            <label for="image">上传头像</label>
+                            <input type="file" id="image" name="image">
+                            </p>
+                            <p class="help-block">点击此处上传头像</p>
+                        </div>
+                        <input class="btn btn-lg btn-block btn-primary" type="submit">
+                        <hr>
+                        <p class="form-p">已有账号？<a href="{% url 'operation:login' %}">[立即登录]</a><a
+                                href="{% url 'index' %}" class="pull-right">回到首页 &raquo;</a></p>
+                </div>
+            </div>
+        </div>
+
+        {% csrf_token %}
+        </form>
+
+    </div>
+</div>
+
+<footer>
+    <p>这个网站由<a href="https://github.com/qq2310091880">Aiyane</a> 搭 © 来联系我吧 <a href="mailto:2310091880qq@gmail.com">2310091880qq@gmail</a>.
+    </p>
+    <p>
+        <a href="#">返回顶部</a>
+    </p>
+</footer>
+
+<script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/messages_zh.min.js' %}"></script>
+<script src="{% static 'js/register.js' %}"></script>
+
+
+<script type="text/javascript" src="{% static 'js/vendor/jquery.backstretch.min.js' %}"></script>
+<script>
+    $.backstretch("{% static 'img/login-bg1.jpg' %}", {
+        speed: 500
+    });
+
+</script>
+
+
+</body>
+
+</html>

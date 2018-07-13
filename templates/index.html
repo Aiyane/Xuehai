@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="background-img">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- 轮播图 -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            {% for vip_course in vip_courses %}
+                <div class="item {% if vip_course == vip_courses|first %}active{% endif %}">
+                    <div class="text-center">
+
+                        <a href="{% url 'courses:course_detail' vip_course.id %}">
+                            <img class="first-slide img-responsive"
+                                 src="{{ MEDIA_URL }}{{ vip_course.image }}"
+                                 width="100%"
+                                 alt="{{ vip_course.name }}">
+                            <img class="first-slide back-ground"
+                                 src="{% static 'img/timg (25).jpg' %}"
+                                 width="100%">
+                            <div class="portfolio-box-caption">
+                                <div class="portfolio-box-caption-content">
+                                    <div class="project-category text-faded">
+                                        教师 -- {{ vip_course.teacher }}
+                                    </div>
+                                    <div class="project-name">
+                                        {{ vip_course.name }}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                    <div class="container">
+                        <div class="carousel-caption">
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+    <div class="container">
+        <h1 class="page-header">课程</h1>
+        <div class="panel panel-info">
+            <div class="row panel-body">
+                {% for course in courses|slice:'6:9' %}
+                    <div class="col-md-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><h4>{{ course.name }}</h4></div>
+                            <div class="panel-body">
+                                <div class="bgrid folio-item">
+                                    <div class="item-wrap">
+                                        <a href="{% url 'courses:course_detail' course.id %}" class="org-slick">
+                                            <img src="{{ MEDIA_URL }}{{ course.image }}" width="100%" alt="Underwater">
+                                            <div class="portfolio-item-meta">
+                                                <h5>{{ course.course_org }}</h5>
+                                                <p>{{ course.name }}</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <p>
+                                    {{ course.desc }}</p>
+                                <h4>讲师：<a href="{% url 'orgs:teacher_detail' course.teacher.id %}" class="label label-primary"> {{ course.teacher.name }}</a></h4>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="row panel-body">
+                {% for course in courses|slice:'3:6' %}
+                    <div class="col-md-4">
+                        <div class="panel panel-success">
+                            <div class="panel-heading"><h4>{{ course.name }}</h4></div>
+                            <div class="panel-body">
+                                <div class="bgrid folio-item">
+                                    <div class="item-wrap">
+                                        <a href="{% url 'courses:course_detail' course.id %}" class="org-slick">
+                                            <img src="{{ MEDIA_URL }}{{ course.image }}" width="100%" alt="Underwater">
+                                            <div class="portfolio-item-meta">
+                                                <h5>{{ course.course_org }}</h5>
+                                                <p>{{ course.name }}</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <p>
+                                    {{ course.desc }}</p>
+                                <h4>讲师：<a href="{% url 'orgs:teacher_detail' course.teacher.id %}" class="label label-success"> {{ course.teacher.name }}</a></h4>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="row panel-body">
+                {% for course in courses|slice:':3' %}
+                    <div class="col-md-4">
+                        <div class="panel panel-info">
+                            <div class="panel-heading"><h4>{{ course.name }}</h4></div>
+                            <div class="panel-body">
+                                <div class="bgrid folio-item">
+                                    <div class="item-wrap">
+                                        <a href="{% url 'courses:course_detail' course.id %}" class="org-slick">
+                                            <img src="{{ MEDIA_URL }}{{ course.image }}" width="100%" alt="Underwater">
+                                            <div class="portfolio-item-meta">
+                                                <h5>{{ course.course_org }}</h5>
+                                                <p>{{ course.name }}</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <p>
+                                    {{ course.desc }}</p>
+                                <h4>讲师：<a href="{% url 'orgs:teacher_detail' course.teacher.id %}" class="label label-info"> {{ course.teacher.name }}</a></h4>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <h1 class="page-header">机构</h1>
+        <!-- 三个一排的机构 -->
+        <div class="row">
+            <div class="row">
+                {% for org in orgs|slice:':3' %}
+
+                    <div class="col-lg-4 org-block">
+                        <div class="panel panel-success">
+                            <div class="panel-body">
+                                <a href="{% url 'orgs:org_detail' org.id %}"><img class="img-circle"
+                                                                                  src="{{ MEDIA_URL }}{{ org.image }}"
+                                                                                  alt="{{ org.name }}"
+                                                                                  width="140" height="140"></a>
+                                <h2>{{ org.name }}</h2>
+                            </div>
+                            <div class="panel-footer">
+                                <p>{{ org.desc }}
+                                </p>
+                                <p>
+                                    <a class="btn btn-secondary" href="{% url 'orgs:org_detail' org.id %}"
+                                       role="button">查看详情 &raquo;</a></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                {% for org in orgs|slice:'3:6' %}
+
+                    <div class="col-lg-4 org-block">
+                        <div class="panel panel-success">
+                            <div class="panel-body">
+                                <a href="{% url 'orgs:org_detail' org.id %}"><img class="img-circle"
+                                                                                  src="{{ MEDIA_URL }}{{ org.image }}"
+                                                                                  alt="{{ org.name }}"
+                                                                                  width="140" height="140"></a>
+                                <h2>{{ org.name }}</h2>
+                            </div>
+                            <div class="panel-footer">
+                                <p>{{ org.desc }}
+                                </p>
+                                <p>
+                                    <a class="btn btn-secondary" href="{% url 'orgs:org_detail' org.id %}"
+                                       role="button">查看详情 &raquo;</a></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

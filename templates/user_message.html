@@ -1,0 +1,41 @@
+{% extends 'user_base.html' %}
+{% load staticfiles %}
+{% block title %}学海网 -- 用户消息{% endblock %}
+{% block content %}
+    <div class="container" style="padding-bottom: 130px">
+        <ul class="nav nav-tabs">
+            <li role="presentation"><a href="{% url 'users:user_home' %}">课程</a></li>
+            <li role="presentation"><a href="{% url 'users:user_list' %}">个人信息</a></li>
+            <li role="presentation" class="active"><a href="{% url 'users:user_message' %}">消息</a></li>
+        </ul>
+        <div class="row">
+            <h2 class="title">我的消息</h2>
+            {% for message in all_message %}
+                <div class="task high">
+                    <div class="desc">
+
+                        <div>
+                            <mark>{{ message.post_user }}</mark>{% if message.course %}在<a href="{% url 'courses:course_detail' message.course.id %}"
+                               class="alert-link">{{ message.course.name }}</a>{% endif %}
+                            向你发来消息 <br><br>{% if message in messages %}<span class="badge">未读</span>{% endif %}
+                            <blockquote>{{ message.message }}
+                                <span class="pull-right">{{ message.add_time }}</span>
+                            </blockquote>
+                        </div>
+                        <hr>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <footer class="footer" style="bottom: 0;position: fixed">
+        <p>这个网站由<a href="#">Aiyane</a> 搭 © 来联系我吧 <a href="mailto:2310091880@qq.com">2310091880qq@gmail</a>.</p>
+        <p>
+            <a href="#">返回顶部</a>
+        </p>
+    </footer>
+{% endblock %}

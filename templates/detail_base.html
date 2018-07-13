@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--确保适当的绘制和触屏缩放-->
+
+    <!--引入文字图标-->
+    <title>{% block title %}学海网-首页{% endblock %}</title>
+    <!--标题-->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <script src="{% static 'js/vendor/holder.min.js' %}"></script>
+    <!--基本bootst的css文件引入-->
+    <!--自定义样式引入-->
+    {% block custom_css %}
+
+    {% endblock %}
+</head>
+
+<body>
+<!--[if lte IE8]>
+<p class="browserupgrade">您的浏览器版本太老了，请到<a href="http://browsehapper.com/">这里</a>更新，以获取最佳的体验</p>
+<![endif]-->
+{% block nav %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<p style="color: rgba(254,254,254,0.3);" class="navbar-toggle">服务电话： 18990185821</p>
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'index' %}?app={{ app }}">学海网</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li {% if request.path == '/' %}class="active"{% endif %}><a
+                        href="{% url 'index' %}?app={{ app }}">主页</a>
+                </li>
+                <li {% if request.path|slice:'13' == '/orgs/teacher' %}class="active"{% endif %}><a
+                        href="{% url 'orgs:teacher_list' %}?app={{ app }}">教师</a>
+                </li>
+                <li {% if request.path|slice:'9' == '/courses/' %}class="active"{% endif %}><a
+                        href="{% url 'courses:courses_list' %}?app={{ app }}">课程</a>
+                </li>
+                <li class="dropdown {% if request.path|slice:'11' == '/orgs/list/' %}active{% endif %}">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button">机构 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'orgs:org_list' %}?app={{ app }}">全部机构</a>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">国内</li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'orgs:org_list' %}?ct=gr&app={{ app }}">国内高校</a>
+                        </li>
+                        <li><a href="{% url 'orgs:org_list' %}?ct=pxjg&app={{ app }}">培训机构</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">国外</li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'orgs:org_list' %}?ct=gx&app={{ app }}">国外高校</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            {% if not request.user.is_authenticated %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'operation:register' %}"><span class="glyphicon glyphicon-user"></span> 注册</a>
+                    </li>
+                    <li><a href="{% url 'operation:login' %}"><span class="glyphicon glyphicon-log-in"></span> 登录</a>
+                    </li>
+                </ul>
+            {% else %}
+                <!--登录后显示以下-->
+                {% if request.user.get_new_message != 0 %}
+                <a href="{% url 'users:user_message' %}"><button class="btn btn-danger" style="position: absolute; margin-left: 30%; margin-top: 0.5%"
+                            type="button">
+                        消息 <span class="badge">{{ request.user.get_new_message }}</span>
+                    </button></a>
+                {% endif %}
+                <div class="personal">
+                    <dl class="user fr">
+                        <dd>{{ user.username }} <span class="caret"></span></dd>
+                        <dt><img width="40" height="40"
+                                 src="{{ MEDIA_URL }}{{ request.user.image }}"
+                        /></dt>
+                    </dl>
+                    <div class="userdetail">
+                        <dl>
+                            <dt><img width="80" height="80"
+                                     src="{{ MEDIA_URL }}{{ request.user.image }}"
+                            /></dt>
+                            <dd>
+                                <h2>用户</h2>
+                                <p>{{ user.username }}</p>
+                            </dd>
+                        </dl>
+                        <div class="btn">
+                            <a class="personcenter fl" href="{% url 'users:user_home' %}">进入个人中心</a>
+                            <a class="fr" href="{% url 'operation:logout' %}">退出</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block goup %}
+<section>
+    <!--回到顶部-->
+    <ul class="sidebar">
+        <li class="totop" ahref="#top" target="_self"></li>
+    </ul>
+</section>
+{% endblock %}
+
+{% block footer %}
+<footer class="">
+    <p>这个网站由<a href="#">Aiyane</a> 搭 © 来联系我吧 <a href="mailto:2310091880@qq.com">2310091880qq@gmail</a>.</p>
+    <p>
+        <a href="#">返回顶部</a>
+    </p>
+</footer>
+{% endblock %}
+
+<script>
+    window.jQuery || document.write('<script src="{% static 'js/vendor/jquery.min.js' %}"><\/script>')
+
+</script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% block custom_js %}
+
+{% endblock %}
+</body>
+
+</html>

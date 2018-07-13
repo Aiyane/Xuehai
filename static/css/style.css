@@ -1,0 +1,221 @@
+/**************
+*页面样式
+***************/
+
+/*  ===========
+	基本默认值
+	=========== */
+
+html {
+    color: #222;
+}
+
+::selection { /*选中文字默认设置*/
+    background-color: #b3d4fc;
+    text-shadow: none;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none; /*去掉小圆点*/
+}
+
+/*  ==============
+	浏览器更新提示
+	============== */
+
+.browserupgrade {
+    margin: 0;
+    padding: 1rem;
+    background: #ccc;
+}
+
+/*  ===============
+	自定义页面样式
+	=============== */
+
+a {
+    color: #666;
+    text-decoration: none;
+    -webkit-transition: all 0.4s ease-in-out;
+}
+
+a:hover, a:active {
+    color: #0ae;
+    text-decoration: none;
+}
+
+/*  ========
+    回到顶部
+    ========*/
+
+.sidebar {
+    display: block;
+    width: 80px;
+    height: 360px;
+    position: fixed;
+    right: 0;
+    top: 50%;
+    z-index: 99;
+}
+
+.sidebar li {
+    float: left;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #e1e1e1;
+    margin: 5px;
+    cursor: pointer;
+    position: relative;
+}
+
+.sidebar li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar .totop {
+    background: #e1e1e1 url(../img/side4.png) no-repeat center center;
+}
+
+.sidebar .totop:hover {
+    background: #717171 url(../img/side4_1.png) no-repeat center center;
+}
+
+/*  =======
+    底部
+    =======*/
+footer {
+    width: 100%;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    color: #999;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-top: 1px solid #e5e5e5;
+}
+
+footer p:last-child {
+    margin-bottom: 0;
+}
+
+/*======
+  大标题
+  ======*/
+.jumbotron-header {
+    padding-top: 60px;
+}
+
+/*=====
+  登录后
+  =====*/
+.personal {
+    height: auto;
+    float: right;
+    position: relative;
+}
+
+.user {
+    height: 30px;
+    line-height: 30px;
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+.user > dd {
+    margin-top: 12px;
+    color: #e5e5e5;
+}
+
+.user > dt {
+    margin-top: 7px;
+    position: absolute;
+    left: -50px;
+    top: -0.1px;
+}
+
+.fr {
+    float: right;
+}
+
+.userdetail {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 38px;
+    background: #fff;
+    padding: 10px;
+    z-index: 99;
+    border: 1px solid #ccc;
+    border-top: 0;
+}
+
+.userdetail dl {
+    width: 300px;
+    height: auto;
+    overflow: hidden;
+}
+
+.userdetail dt {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 50%;
+    float: left;
+}
+
+.userdetail dd {
+    text-align: right;
+    line-height: 20px;
+    width: 190px;
+    float: right;
+    position: absolute;
+    right: 10px;
+    top: 30px;
+    color: #333;
+    height: auto;
+    overflow: hidden;
+}
+
+.userdetail h2 {
+    color: #717171;
+}
+
+.userdetail .btn {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 20px;
+    clear: both;
+}
+
+.userdetail .btn a {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background: #717171;
+    color: #fff;
+}
+
+.userdetail .btn a:hover {
+    background: #0ae;
+}
+
+.userdetail .btn a.fl {
+    width: 65%;
+}
+
+.userdetail .btn a.fr {
+    width: 32%;
+}
+
+.fl {
+    float: left !important;
+}

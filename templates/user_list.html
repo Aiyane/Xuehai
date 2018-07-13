@@ -1,0 +1,142 @@
+{% extends 'user_base.html' %}
+{% load staticfiles %}
+{% block title %}学海网 -- 用户信息{% endblock %}
+{% block content %}
+    {% if error %}
+        <script>
+        alert(error);
+        </script>
+    {% endif %}
+    <div class="container" style="padding-bottom: 130px">
+        <ul class="nav nav-tabs">
+            <li role="presentation"><a href="{% url 'users:user_home' %}">课程</a></li>
+            <li role="presentation" class="active"><a href="{% url 'users:user_list' %}">个人信息</a></li>
+            <li role="presentation"><a href="{% url 'users:user_message' %}">消息</a></li>
+        </ul>
+
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">个人信息</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <form class="form-inline" action="{% url 'users:user_list' %}" method="post" enctype="multipart/form-data"><!--在表单中传文件一定要加enctype="multipart/form-data"-->
+                            <div class="col-md-3 text-center">
+                                <img src="{{ MEDIA_URL }}{{ user.image }}" class="image" width="100%"/>
+                                <br><br>
+                                <input type="file" name="image" />
+                                <p class="help-block">点击上传头像</p>
+                                <a href="{% url 'users:change_password' %}?email={{ user.email }}" class="btn btn-danger">修改密码</a>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="well">用户名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+                                        value="{{ user.username }}" class="form-control list-inline username"
+                                        name="username"
+                                        type="text"/></div>
+                                <hr>
+                                <div class="well">性别：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="gener-1" value="male" class="male"
+                                           {% if user.gender == "male" %}checked="checked"{% endif %}>&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="gener-1" value="female" class="female"
+                                           {% if user.gender == "female" %}checked="checked"{% endif %}>&nbsp;女
+                                    <input class="hidden" name="gender" value="{{ user.gender }}" />
+                                </div>
+                                <hr>
+                                <div class="well">生日：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+                                        value="{{ user.birthday }}" class="form-control list-inline birthday"
+                                        name="birthday"
+                                        type="date"/>&nbsp;&nbsp;{{ user.birthday }}</div>
+                                <hr>
+                                <div class="well">电话号码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+                                        value="{{ user.mobile }}" class="form-control list-inline mobile" name="mobile"
+                                        type="tel"/></div>
+                                <hr>
+                                <div class="well">邮箱地址：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+                                        value="{{ user.email }}" class="form-control list-inline email"
+                                        type="email" disabled/>&nbsp;&nbsp;&nbsp;
+                                    <div class="hidden hidden-email"><br>请输入邮箱验证码：&nbsp;&nbsp;<input
+                                            value="" type="text" class="form-control list-inline" id="hidden_email"/>
+                                    </div>
+                                    <a class="btn btn-default" id="reset">点击修改</a>
+                                    <a class="btn btn-default hidden" id="reset_up">点击提交</a>
+                                    <a class="btn btn-default hidden" id="reset_email">点击确认</a>
+                                </div>
+
+                                <hr>
+                                <button class="btn btn-primary" id="save" type="submit"
+                                   style="margin-left: 40%">&nbsp;&nbsp;保存&nbsp;&nbsp;</button>
+                            </div>
+                            {% csrf_token %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+{% block footer %}
+{% endblock %}
+{% block custom_js %}
+    <script>
+        $('#reset').on('click', function () {
+            $('.email').removeAttr("disabled");
+            $('#reset').addClass("hidden");
+            $('#reset_up').removeClass("hidden");
+        });
+        $('#reset_up').on('click', function () {
+            var email = $('.email').val();
+            if (email == "") {
+                alert("邮箱不能为空");
+                return
+            }
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "{% url 'users:reset_email' %}",
+                data: {'user_id':{{ user.id }}, 'email': email},
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.msg == "请前往邮箱验证") {
+                        $('.email').attr("disabled",'disabled');
+                        $('#reset_up').addClass("hidden");
+                        $('.hidden-email').removeClass("hidden");
+                        $('#reset_email').removeClass("hidden");
+                    }
+                },
+            });
+
+        });
+        $('#reset_email').on('click', function () {
+            var active_code = $('#hidden_email').val();
+            var email = $('.email').val();
+            if (active_code == "") {
+                alert("验证码不能为空");
+                return
+            }
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "{% url 'users:email_active' %}",
+                data: {'active_code': active_code, 'email': email},
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    alert(data.msg);
+                    window.location.reload();
+                },
+            });
+        });
+        $('.male').on('click', function () {
+            $("input[name='gender']").val("male");
+        });
+        $('.female').on('click', function () {
+            $("input[name='gender']").val("female");
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'detail_base.html' %}
+{% load staticfiles %}
+{% block title %}
+    学海网-{{ video.name }}
+{% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/video.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container content">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>{{ course.name }} -- {{ video.name }}</h2>
+                <ol class="breadcrumb right-and-order">
+                    <li><a href="{% url 'index' %}?app={{ app }}">主页</a></li>
+                    <li><a href="{% url 'courses:courses_list' %}?app={{ app }}">课程</a></li>
+                    <li><a href="{% url 'courses:course_detail' course.id %}">{{ course.name }}</a></li>
+                    <li><a href="{% url 'courses:course_video' video.id %}">{{ video.name }}</a></li>
+                </ol>
+                <video controls="controls" width="100%">
+                    <source src="{{ video.url }}" type="video/mp4">
+                </video>
+
+                <ul class="">
+                    <li>
+                        <h3 class="green">对此课程的评价</h3>
+                    </li>
+                    <div class="comment-send row">
+                        <div class="user-face col-md-1"><img class="user-head img-circle" width="50px"
+                                                             src="{{ MEDIA_URL }}{{ request.user.image }}">
+                        </div>
+                        <div class="textarea-container col-md-9"><i class="ipt-arrow"></i><textarea
+                                class="form-control" cols="80" name="msg" rows="3" id="comment-content"
+                                placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。"
+                        ></textarea>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" id="submit" class="btn btn-primary comment-btn">发表<br>评论</button>
+                        </div>
+                    </div>
+                    <!--以防万一的错误--><p style="color: #761c19;">{% if msg %}{{ msg }}{% endif %}</p>
+                    <br>
+                    <hr>
+
+                    <iframe name="myiframe" id="myiframe" frameborder="0"
+                            src="{% url 'courses:add_comment' %}?video_id={{ video.id }}"
+                            scrolling="no" width="100%"></iframe>
+                </ul>
+
+            </div>
+            <aside class="col-md-4">
+                <div class="aside">
+                    {% for lesson in course.get_course_lesson %}
+                        <h2 class="post-title">
+                            {{ lesson.name }}
+                        </h2>
+                        {% for get_video in lesson.get_lesson_video %}
+                            <a href="{% url 'courses:course_video' get_video.id %}" onclick="videoid()"
+                               {% if get_video.id == video.id %}class="btn disabled" {% endif %}>
+                                <h3 class="{{ get_video.id }}" id="call">
+                                    {{ get_video.name }}
+                                </h3>
+                            </a>
+                        {% endfor %}
+                        <p class="post-meta">添加时间：{{ lesson.add_time }}</p>
+                        <hr>
+                    {% endfor %}
+                </div>
+            </aside>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+        //添加评论
+        $('#submit').on('click', function () {
+            var comments = $("#comment-content").val();
+            if (comments == "") {
+                alert("评论不能为空");
+                return
+            }
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "{% url 'courses:add_comment' %}",
+                data: {'course_id':{{ course.id }}, 'comments': comments},
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    if (data.status == 'fail') {
+                        if (data.msg == '用户未登录') {
+                            window.location.href = "/operation/login/";
+                        } else {
+                            alert(data.msg)
+                        }
+
+                    } else if (data.status == 'success') {
+                        $('#comment-content').val('');
+                        document.getElementById('myiframe').contentWindow.location.reload(true); //刷新页面.
+                    }
+                },
+            });
+        });
+    </script>
+    <script src="{% static 'js/video.js' %}"></script>
+{% endblock %}

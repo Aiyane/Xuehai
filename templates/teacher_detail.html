@@ -1,0 +1,78 @@
+{% extends 'detail_base.html' %}
+{% load staticfiles %}
+{% block title %}学海网-教师详情{% endblock %}
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/teacher_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="course-list">
+        <div class="container">
+
+            <section id="hero">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-md-6">
+                                <a href="{{ MEDIA_URL }}{{ teacher.image }}" class="teacher-image" target="_blank"><img
+                                        src="{{ MEDIA_URL }}{{ teacher.image }}" width="100%" alt="{{ teacher.name }}"></a>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="panel-heading">
+                                    <h2 class="text-center h2-name">{{ teacher.name }}</h2><hr>
+                                </div>
+                                <p class="content">
+                                    <span class="text-info tedian">教学特点：</span>
+                                    {{ teacher.points }}
+                                </p>
+
+                                <p class="content">
+                                    <span class="text-info tedian">所属机构：</span>
+                                    <a href="{% url 'orgs:org_detail' teacher.org.id %}"><span class="label label-default" >{{ teacher.org.name }}</span></a>
+                                </p>
+
+                                <p class="content">
+                                    <span class="text-info tedian">工作时间：</span>
+                                    {{ teacher.work_year }} 年
+                                </p>
+                                <p class="content">
+                                    <span class="text-info tedian">加入时间：</span>
+                                    {{ teacher.add_time }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <ol class="breadcrumb right-and-order">
+                <li><a href="{% url 'index' %}?app={{ app }}">主页</a></li>
+                <li><a href="{% url 'orgs:teacher_list' %}?app={{ app }}">教师</a></li>
+                <li><a href="{% url 'orgs:teacher_detail' teacher.id %}">{{ teacher.name }}</a></li>
+            </ol>
+            <div class="row items">
+                <div id="portfolio-wrapper" class="bgrid-fourth s-bgrid-third tab-bgrid-half">
+                    <h2 class="well-md">教师课程：</h2>
+                    <div class="row">
+                        {% for course in all_courses %}
+                            <div class="col-md-4">
+                                <div class="bgrid folio-item">
+                                    <div class="item-wrap">
+                                        <a href="{% url 'courses:course_detail' course.id %}" class="org-slick">
+                                            <img src="{{ MEDIA_URL }}{{ course.image }}" width="100%" alt="{{ course.name }}">
+                                            <div class="portfolio-item-meta">
+                                                <h5>{{ course.course_org }}</h5>
+                                                <p>{{ course.name }}</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
